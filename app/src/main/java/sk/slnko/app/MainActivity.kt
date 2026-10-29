@@ -96,6 +96,12 @@ class MainActivity : Activity() {
         findViewById<Button>(R.id.btnLocation).setOnClickListener {
             if (hasLocationPermission()) refreshLocation(showToast = true) else askPermissions()
         }
+        findViewById<Button>(R.id.btnPlayBell).setOnClickListener {
+            Notifications.playBell(this)
+        }
+        findViewById<Button>(R.id.btnSound).setOnClickListener {
+            Notifications.openSoundSettings(this)
+        }
         findViewById<Button>(R.id.btnTest).setOnClickListener {
             askNotificationPermissionIfNeeded()
             Notifications.show(this, SunEvent.SUNRISE, System.currentTimeMillis() + 10 * 60_000L)

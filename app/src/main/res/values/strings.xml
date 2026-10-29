@@ -20,6 +20,10 @@
     <string name="need_location">Upozornenia sa naplánujú, keď bude známa poloha.</string>
     <string name="notifications_off">Upozornenia sú vypnuté.</string>
     <string name="test_notification">Vyskúšať upozornenie</string>
+    <string name="sound">Zvuk upozornenia</string>
+    <string name="sound_desc">Predvolený zvuk je zvonček. V nastaveniach si môžeš vybrať aj iný zvuk alebo vibrovanie.</string>
+    <string name="play_bell">🔔 Prehrať zvonček</string>
+    <string name="choose_sound">Zmeniť zvuk upozornenia</string>
     <string name="channel_name">Východ a západ slnka</string>
     <string name="channel_desc">Upozornenia pred východom a západom slnka</string>
     <string name="notif_sunrise_title">Východ slnka o %1$s</string>

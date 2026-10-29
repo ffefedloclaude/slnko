@@ -6,13 +6,25 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.media.AudioAttributes
+import android.media.MediaPlayer
+import android.net.Uri
+import android.provider.Settings
 import java.time.format.DateTimeFormatter
 
 object Notifications {
-    private const val CHANNEL_ID = "sun_events"
+    // Nový kanál so zvukom zvončeka (zvuk kanála sa po vytvorení nedá zmeniť z kódu).
+    const val CHANNEL_ID = "sun_events_bell"
+    private const val OLD_CHANNEL_ID = "sun_events"
+
+    fun bellUri(context: Context): Uri =
+        Uri.parse("android.resource://${context.packageName}/${R.raw.zvoncek}")
 
     fun ensureChannel(context: Context) {
         val nm = context.getSystemService(NotificationManager::class.java) ?: return
+        if (nm.getNotificationChannel(OLD_CHANNEL_ID) != null) {
+            nm.deleteNotificationChannel(OLD_CHANNEL_ID)
+        }
         if (nm.getNotificationChannel(CHANNEL_ID) == null) {
             val ch = NotificationChannel(
                 CHANNEL_ID,
@@ -20,7 +32,41 @@ object Notifications {
                 NotificationManager.IMPORTANCE_HIGH
             )
             ch.description = context.getString(R.string.channel_desc)
+            val attrs = AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .build()
+            ch.setSound(bellUri(context), attrs)
+            ch.enableVibration(true)
             nm.createNotificationChannel(ch)
+        }
+    }
+
+    /** Otvorí systémové nastavenia kanála, kde si používateľ vyberie iný zvuk. */
+    fun openSoundSettings(context: Context) {
+        ensureChannel(context)
+        val intent = Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
+            .putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
+            .putExtra(Settings.EXTRA_CHANNEL_ID, CHANNEL_ID)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        try {
+            context.startActivity(intent)
+        } catch (_: Exception) {
+            context.startActivity(
+                Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+                    .putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            )
+        }
+    }
+
+    /** Prehrá zvuk zvončeka priamo v aplikácii. */
+    fun playBell(context: Context) {
+        try {
+            val mp = MediaPlayer.create(context, R.raw.zvoncek) ?: return
+            mp.setOnCompletionListener { it.release() }
+            mp.start()
+        } catch (_: Exception) {
         }
     }
 
