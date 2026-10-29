@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Slnko</string>
+    <string name="sunrise">Východ slnka</string>
+    <string name="sunset">Západ slnka</string>
+    <string name="day_length">Dĺžka dňa: %1$s</string>
+    <string name="tomorrow">Zajtra: východ %1$s · západ %2$s</string>
+    <string name="polar_day">Polárny deň – slnko dnes nezapadne</string>
+    <string name="polar_night">Polárna noc – slnko dnes nevyjde</string>
+    <string name="no_location">Poloha zatiaľ nie je známa</string>
+    <string name="refresh_location">Aktualizovať polohu</string>
+    <string name="location_off">Zapni v telefóne polohu (GPS), aby som mohol vypočítať časy.</string>
+    <string name="location_searching">Zisťujem polohu…</string>
+    <string name="notifications">Upozornenia</string>
+    <string name="notify_sunrise">Upozorniť pred východom slnka</string>
+    <string name="notify_sunset">Upozorniť pred západom slnka</string>
+    <string name="minutes_before">Koľko minút vopred:</string>
+    <string name="next_rise">Najbližšie upozornenie na východ: %1$s</string>
+    <string name="next_set">Najbližšie upozornenie na západ: %1$s</string>
+    <string name="need_location">Upozornenia sa naplánujú, keď bude známa poloha.</string>
+    <string name="notifications_off">Upozornenia sú vypnuté.</string>
+    <string name="test_notification">Vyskúšať upozornenie</string>
+    <string name="channel_name">Východ a západ slnka</string>
+    <string name="channel_desc">Upozornenia pred východom a západom slnka</string>
+    <string name="notif_sunrise_title">Východ slnka o %1$s</string>
+    <string name="notif_sunset_title">Západ slnka o %1$s</string>
+    <string name="notif_in_minutes">O %1$d %2$s</string>
+    <string name="notif_now">Práve teraz</string>
+</resources>

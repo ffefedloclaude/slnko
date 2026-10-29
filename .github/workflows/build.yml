@@ -1,0 +1,50 @@
+name: Zostavenie APK
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Stiahnutie kódu
+        uses: actions/checkout@v4
+
+      - name: Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
+
+      - name: Zostavenie APK
+        run: gradle assembleRelease --no-daemon --stacktrace
+
+      - name: Premenovanie APK
+        run: cp app/build/outputs/apk/release/app-release.apk Slnko-1.0.${{ github.run_number }}.apk
+
+      - name: Uloženie APK (artifact)
+        uses: actions/upload-artifact@v4
+        with:
+          name: Slnko-APK
+          path: Slnko-*.apk
+
+      - name: Vydanie (Release) na stiahnutie
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.0.${{ github.run_number }}
+          name: Slnko 1.0.${{ github.run_number }}
+          body: |
+            Aplikácia Slnko – východ a západ slnka s upozorneniami.
+            Stiahni súbor **Slnko-1.0.${{ github.run_number }}.apk** nižšie a otvor ho v telefóne.
+          files: Slnko-*.apk
+          make_latest: true
